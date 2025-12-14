@@ -4,14 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Système solaire</title>
+</head>
 
-  <style>
+<body>
+  <div class="space">
+    <div class="sun"></div>
+    <div class="planet mercury"></div>
+    <div class="planet venus"></div>
+    <div class="planet earth"></div>
+    <div class="planet mars"></div>
+    <div class="planet jupiter"></div>
+    <div class="planet saturn"></div>
+    <div class="planet uranus"></div>
+    <div class="planet neptune"></div>
+    
+  <!-- Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+<style>
 body {
   margin: 0;
   overflow: hidden;
   background: radial-gradient(circle at center, #000010, #000);
-  font-family: Arial, sans-serif;
-  color: white;
 }
 
 .space {
@@ -39,48 +53,58 @@ body {
   border-radius: 50%;
 }
 
-.mercury { width: 10px; height: 10px; background: gray; }
-.venus   { width: 18px; height: 18px; background: orange; }
-.earth   { width: 20px; height: 20px; background: deepskyblue; }
-.mars    { width: 16px; height: 16px; background: red; }
-.jupiter { width: 35px; height: 35px; background: peru; }
-.saturn  { width: 30px; height: 30px; background: khaki; }
-.uranus  { width: 26px; height: 26px; background: lightblue; }
-.neptune { width: 24px; height: 24px; background: royalblue; }
-
-#info-panel {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(0,0,0,0.7);
-  border-radius: 10px;
-  padding: 15px;
-  width: 330px;
-  z-index: 10;
+.mercury {
+  width: 12px;
+  height: 12px;
+  background: gray;
 }
-  </style>
-</head>
 
-<body>
+.venus {
+  width: 20px;
+  height: 20px;
+  background: orange;
+}
 
-<div class="space">
-  <div class="sun"></div>
-  <div class="planet mercury"></div>
-  <div class="planet venus"></div>
-  <div class="planet earth"></div>
-  <div class="planet mars"></div>
-  <div class="planet jupiter"></div>
-  <div class="planet saturn"></div>
-  <div class="planet uranus"></div>
-  <div class="planet neptune"></div>
-</div>
+.earth {
+  width: 22px;
+  height: 22px;
+  background: deepskyblue;
+}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+.mars    { 
+  width: 16px; 
+  height: 16px; 
+  background: red; }
+  
+.jupiter { 
+  width: 35px; 
+  height: 35px; 
+  background: peru; }
+  
+.saturn  { 
+  width: 30px; 
+  height: 30px; 
+  background: khaki; }
+  
+.uranus  { 
+  width: 26px; 
+  height: 26px; 
+  background: lightblue; }
+  
+.neptune { 
+  width: 24px; 
+  height: 24px; 
+  background: royalblue; }
+  
+</style>
 
 <script>
-// Sélection des planètes
-const space = document.querySelector('.space');
+// Sélectionne les planètes
+const mercury = document.querySelector('.mercury');
+const venus = document.querySelector('.venus');
+const earth = document.querySelector('.earth');
 
+// Fonction d'orbite avec Anime.js
 function orbit(planet, distance, duration) {
   anime({
     targets: planet,
@@ -97,6 +121,7 @@ function orbit(planet, distance, duration) {
   });
 }
 
+// orbit
 orbit(document.querySelector('.mercury'), 100, 4000);
 orbit(document.querySelector('.venus'),   150, 7000);
 orbit(document.querySelector('.earth'),   210, 10000);
@@ -106,7 +131,8 @@ orbit(document.querySelector('.saturn'),  400, 25000);
 orbit(document.querySelector('.uranus'),  470, 30000);
 orbit(document.querySelector('.neptune'), 540, 35000);
 
-// ÉTOILES 
+// Ajoute quelques étoiles aléatoires
+const space = document.querySelector('.space');
 for (let i = 0; i < 80; i++) {
   const star = document.createElement('div');
   star.style.position = 'absolute';
