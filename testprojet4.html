@@ -266,7 +266,7 @@
       }
     });
 
-    // infos complètes
+    // Infos
     const planetInfo = {
       Soleil: `
         ⭐ <b>Type :</b> Étoile naine jaune (G2V)<br>
@@ -332,7 +332,7 @@
       planetText.innerHTML = planetInfo[name] || "Aucune information disponible.";
     }
 
-    // sons (v5)
+    // sons 
     const planetSounds = {
       Soleil: new Audio("sun.mp3"),
       Mercure: new Audio("mercury.mp3"),
@@ -365,7 +365,7 @@
       planetSounds[name].play().catch(()=>{});
     }
 
-    // un seul set de listeners (propre)
+    // un seul set de listeners 
     planets.forEach(p => {
       p.addEventListener("click", () => {
         const name = p.dataset.name;
