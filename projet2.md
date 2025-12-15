@@ -1,4 +1,5 @@
 projet2.md : 
+
 Pour améliorer l’interaction avec l’utilisateur, j’ai ajouté des sliders permettant de contrôler le système solaire.
 
 Un premier slider permet de modifier la vitesse des orbites. Il agit directement sur la durée des animations Anime.js, ce qui accélère ou ralentit toutes les planètes en temps réel.
