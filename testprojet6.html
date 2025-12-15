@@ -9,14 +9,14 @@
 </head>
 
 <body>
-  <!-- ===== FOND ÉTOILÉ FIXE ===== -->
+  <!-- FOND ÉTOILÉ FIXE -->
   <div class="stars-layer"></div>
 
-  <!-- ===== OVERLAYS ===== -->
+  <!-- OVERLAYS -->
   <div id="white-flash" class="white-flash"></div>
   <div id="blackout" class="blackout"></div>
 
-  <!-- ===== PANNEAU D'INFOS ===== -->
+  <!-- PANNEAU D'INFOS -->
   <div id="info-panel">
     <h2 id="planet-name">Clique sur un astre 🌍</h2>
     <p id="planet-info">Découvre les planètes en cliquant dessus !</p>
@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <!-- ===== SYSTÈME SOLAIRE ===== -->
+  <!-- SYSTÈME SOLAIRE -->
   <div class="space-container">
     <div class="space">
       <div class="sun" data-name="Soleil"></div>
@@ -60,7 +60,7 @@
     </div>
   </div>
 
-  <!-- ===== BOUTONS BAS DROITE ===== -->
+  <!-- BOUTONS BAS DROITE -->
   <button id="danger-btn" class="danger-btn">☢️ DANGER</button>
   <button id="reset-btn" class="reset-btn">🔄 Réinitialiser</button>
 
@@ -371,7 +371,7 @@
       starsLayer.appendChild(star);
     }
 
-    /* --- Infos (panneau) --- */
+    /* --- Infos --- */
     const planetInfo = {
       Soleil: `⭐ <b>Type :</b> Étoile naine jaune (G2V)<br>🌡️ <b>Température :</b> 5 500 °C<br>⚡ <b>Âge :</b> 4,6 milliards d'années<br>💥 <b>Rôle :</b> Source d'énergie du système solaire`,
       Mercure: `🟠 <b>Distance :</b> 58 millions km<br>⏱️ <b>Année :</b> 88 jours<br>🌡️ <b>Température :</b> -180°C à +430°C<br>🧱 <b>Composition :</b> Roche métallique`,
@@ -567,7 +567,7 @@
       }
     });
 
-    /* --- Bouton ORBITES 💫 --- */
+    /* --- Bouton ORBITES --- */
     const toggleOrbitsBtn = document.getElementById("toggle-orbits");
     toggleOrbitsBtn.addEventListener("click", () => {
       if (dangerUsed) return;
@@ -576,7 +576,7 @@
       toggleOrbitsBtn.textContent = orbitsVisible ? "💫 Orbites : ON" : "💫 Orbites : OFF";
     });
 
-    /* ===== DANGER MODE ===== */
+    /* ---DANGER MODE--- */
     function flashWhite() {
       anime({
         targets: whiteFlash,
