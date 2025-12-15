@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Système solaire</title>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 
@@ -134,7 +135,7 @@
     let globalSpeed = 1;
     let zoomLevel = 1;
 
-    // étoiles (fixes) — v4
+    // étoiles fixes
     for (let i = 0; i < 120; i++) {
       const star = document.createElement("div");
       star.style.position = "absolute";
@@ -175,7 +176,7 @@
     orbit(document.querySelector('.uranus'),  470, 30000);
     orbit(document.querySelector('.neptune'), 540, 35000);
 
-    // INFOS COMPLETES
+    // INFOS
     const planetInfo = {
       Soleil: `
         ⭐ <b>Type :</b> Étoile naine jaune (G2V)<br>
