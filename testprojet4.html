@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Système solaire interactif</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="info-panel">
+    <h2 id="planet-name">Clique sur un astre 🌍</h2>
+    <p id="planet-info">Découvre les planètes en cliquant dessus !</p>
+    <div class="slider-container">
+      <label for="speed-range">Vitesse :</label>
+      <input type="range" id="speed-range" min="0.2" max="2" step="0.1" value="1">
+      <span id="speed-value">1x</span>
+    </div>
+    <div class="slider-container">
+      <label for="zoom-range">Zoom :</label>
+      <input type="range" id="zoom-range" min="0.5" max="2.5" step="0.1" value="1">
+      <span id="zoom-value">1x</span>
+    </div>
+<div class="controls-row">
+  <button id="toggle-sound" class="control-btn">🔊 Son : ON</button>
+  <button id="toggle-system" class="control-btn">⏸️ Pause système</button>
+</div>
+  </div>
+  
+  <div class="space-container">
+    <div class="space">
+      <div class="sun" data-name="Soleil"></div>
+      <div class="planet mercury" data-name="Mercure"></div>
+      <div class="planet venus" data-name="Vénus"></div>
+      <div class="planet earth" data-name="Terre"></div>
+      <div class="planet mars" data-name="Mars"></div>
+      <div class="planet jupiter" data-name="Jupiter"></div>
+      <div class="planet saturn" data-name="Saturne"></div>
+      <div class="planet uranus" data-name="Uranus"></div>
+      <div class="planet neptune" data-name="Neptune"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #000010, #000);
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+.space-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.space {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  transform-origin: center center;
+  transition: transform 0.3s ease;
+}
+
+.sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, #ffcc33, #ff6600);
+  border-radius: 50%;
+  box-shadow: 0 0 40px 20px rgba(255,200,50,0.8);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.planet {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Planètes */
+.mercury { width: 10px; height: 10px; background: gray; }
+.venus   { width: 18px; height: 18px; background: orange; }
+.earth   { width: 20px; height: 20px; background: deepskyblue; }
+.mars    { width: 16px; height: 16px; background: red; }
+.jupiter { width: 35px; height: 35px; background: peru; }
+.saturn  { width: 30px; height: 30px; background: khaki; }
+.uranus  { width: 26px; height: 26px; background: lightblue; }
+.neptune { width: 24px; height: 24px; background: royalblue; }
+
+/* Zone d'information */
+#info-panel {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  padding: 15px;
+  width: 330px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.1);
+  z-index: 10;
+}
+
+#info-panel h2 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+}
+
+#info-panel p {
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0 0 10px 0;
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+#speed-range,
+#zoom-range {
+  width: 120px;
+}
+
+/* Container pour les boutons (sous les sliders) */
+.controls-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: flex-start;
+}
+
+/* Style des boutons pour qu'ils soient cohérents avec le panneau info */
+.control-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  transition: transform .12s ease, background .12s ease;
+}
+.control-btn:hover { transform: translateY(-2px); }
+.control-btn:active { transform: translateY(0); }
+
+/* Etats visuels */
+.control-btn.off {
+  background: rgba(255,0,0,0.12);
+  border-color: rgba(255,0,0,0.25);
+  color: #ffdddd;
+}
+.control-btn.paused {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.18);
+}
+</style>
+
+
+<script>
+// Sélection des planètes et du Soleil
+const planets = document.querySelectorAll('.planet');
+const sun = document.querySelector('.sun');
+const space = document.querySelector('.space');
+const planetOrbits = [];
+
+let globalSpeed = 1;
+let zoomLevel = 1;
+
+// Fonction d'orbite
+function orbit(planet, distance, duration) {
+  const anim = anime({
+    targets: planet,
+    rotate: '1turn',
+    duration: duration,
+    easing: 'linear',
+    loop: true,
+    autoplay: true,
+    update: (anim) => {
+      const angle = (anim.progress / 100) * 2 * Math.PI;
+      const x = Math.cos(angle) * distance;
+      const y = Math.sin(angle) * distance;
+      planet.style.transform = `translate(${x}px, ${y}px)`;
+    },
+  });
+  planetOrbits.push({ anim, baseDuration: duration });
+}
+
+// Crée les orbites
+orbit(document.querySelector('.mercury'), 100, 4000);
+orbit(document.querySelector('.venus'),   150, 7000);
+orbit(document.querySelector('.earth'),   210, 10000);
+orbit(document.querySelector('.mars'),    260, 13000);
+orbit(document.querySelector('.jupiter'), 330, 20000);
+orbit(document.querySelector('.saturn'),  400, 25000);
+orbit(document.querySelector('.uranus'),  470, 30000);
+orbit(document.querySelector('.neptune'), 540, 35000);
+
+
+// Ajoute quelques étoiles aléatoires
+const space = document.querySelector('.space');
+for (let i = 0; i < 80; i++) {
+  const star = document.createElement('div');
+  star.style.position = 'absolute';
+  star.style.width = '2px';
+  star.style.height = '2px';
+  star.style.background = 'white';
+  star.style.borderRadius = '50%';
+  star.style.top = Math.random() * 100 + '%';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.opacity = Math.random();
+  space.appendChild(star);
+}
+
+// Infos planètes
+const planetInfo = {
+  Soleil: `
+    ⭐ <b>Type :</b> Étoile naine jaune (G2V)<br>
+    🌡️ <b>Température surface :</b> 5 500 °C<br>
+    ⚡ <b>Âge :</b> 4,6 milliards d'années<br>
+    💥 <b>Rôle :</b> Source d'énergie et de gravité du système solaire
+  `,
+  Mercure: `
+    🟠 <b>Distance du Soleil :</b> 58 millions km<br>
+    ⏱️ <b>Année :</b> 88 jours terrestres<br>
+    🌡️ <b>Température :</b> -180°C à +430°C<br>
+    🧱 <b>Composition :</b> Roche métallique
+  `,
+  Vénus: `
+    💨 <b>Distance du Soleil :</b> 108 millions km<br>
+    ⏱️ <b>Année :</b> 225 jours terrestres<br>
+    🌫️ <b>Atmosphère :</b> CO₂ et nuages d'acide sulfurique<br>
+    🌡️ <b>Température moyenne :</b> 465°C
+  `,
+  Terre: `
+    🌍 <b>Distance du Soleil :</b> 150 millions km<br>
+    ⏱️ <b>Année :</b> 365 jours<br>
+    🌡️ <b>Température moyenne :</b> 15°C<br>
+    💧 <b>Spécificité :</b> Présence d'eau liquide et de vie
+    <br>🌙 <b>La lune :</b> Satellite naturel de la Terre<br>
+  `,
+  Mars: `
+    🔴 <b>Distance du Soleil :</b> 228 millions km<br>
+    ⏱️ <b>Année :</b> 687 jours terrestres<br>
+    🌡️ <b>Température moyenne :</b> -60°C<br>
+    🧱 <b>Surface :</b> poussière de fer rougeâtre, calottes de glace
+  `,
+  Jupiter: `
+    🌕 <b>Distance du Soleil :</b> 778 millions km<br>
+    ⏱️ <b>Année :</b> 12 ans terrestres<br>
+    💨 <b>Atmosphère :</b> Hydrogène et hélium<br>
+    ⚡ <b>Particularité :</b> La plus grande planète, grande tache rouge
+  `,
+  Saturne: `
+    ❄️ <b>Distance du Soleil :</b> 1,4 milliard km<br>
+    ⏱️ <b>Année :</b> 29 ans terrestres<br>
+    💠 <b>Anneaux :</b> Glace et poussière<br>
+    🌡️ <b>Température :</b> -140°C
+  `,
+  Uranus: `
+    💎 <b>Distance du Soleil :</b> 2,9 milliards km<br>
+    ⏱️ <b>Année :</b> 84 ans terrestres<br>
+    🌀 <b>Inclinaison :</b> 98° sur le côté<br>
+    🌡️ <b>Température :</b> -195°C
+  `,
+  Neptune: `
+    🌊 <b>Distance du Soleil :</b> 4,5 milliards km<br>
+    ⏱️ <b>Année :</b> 165 ans terrestres<br>
+    💨 <b>Vents :</b> > 2 000 km/h<br>
+    🌡️ <b>Température :</b> -200°C
+  `
+};
+
+// Sélection du panneau info
+const planetName = document.getElementById('planet-name');
+const planetText = document.getElementById('planet-info');
+
+// Interactions : clics
+planets.forEach(p => {
+  p.addEventListener('click', () => {
+    const name = p.dataset.name;
+    planetName.textContent = name;
+    planetText.innerHTML = planetInfo[name] || "Aucune information disponible.";
+  });
+});
+
+sun.addEventListener('click', () => {
+  planetName.textContent = "Soleil";
+  planetText.innerHTML = planetInfo["Soleil"];
+});
+
+// Slider de vitesse
+const speedRange = document.getElementById('speed-range');
+const speedValue = document.getElementById('speed-value');
+speedRange.addEventListener('input', e => {
+  globalSpeed = parseFloat(e.target.value);
+  speedValue.textContent = globalSpeed.toFixed(1) + "x";
+  planetOrbits.forEach(({ anim, baseDuration }) => {
+    anim.duration = baseDuration / globalSpeed;
+  });
+});
+
+// Slider de zoom
+const zoomRange = document.getElementById('zoom-range');
+const zoomValue = document.getElementById('zoom-value');
+zoomRange.addEventListener('input', e => {
+  zoomLevel = parseFloat(e.target.value);
+  zoomValue.textContent = zoomLevel.toFixed(1) + "x";
+  space.style.transform = `scale(${zoomLevel})`;
+});
+
+// Zoom à la molette
+window.addEventListener('wheel', e => {
+  e.preventDefault();
+  zoomLevel += e.deltaY * -0.001;
+  zoomLevel = Math.min(Math.max(0.5, zoomLevel), 2.5);
+  space.style.transform = `scale(${zoomLevel})`;
+  zoomRange.value = zoomLevel;
+  zoomValue.textContent = zoomLevel.toFixed(1) + "x";
+}, { passive: false });
+
+// --- Sons des planètes ---
+const planetSounds = {
+  Soleil: new Audio("sun.mp3"),
+  Mercure: new Audio("mercury.mp3"),
+  Vénus: new Audio("venus.mp3"),
+  Terre: new Audio("earth.mp3"),
+  Mars: new Audio("mars.mp3"),
+  Jupiter: new Audio("jupiter.mp3"),
+  Saturne: new Audio("saturn.mp3"),
+  Uranus: new Audio("uranus.mp3"),
+  Neptune: new Audio("neptune.mp3")
+};
+
+// --- Débloquer audio iPhone / Safari ---
+let audioUnlocked = false;
+
+function unlockAudio() {
+  if (audioUnlocked) return;
+
+  Object.values(planetSounds).forEach(sound => {
+    sound.play().catch(()=>{}); // essai obligatoire
+    sound.pause();
+    sound.currentTime = 0;
+  });
+
+  audioUnlocked = true;
+  console.log("Audio débloqué 🎧");
+}
+
+window.addEventListener("touchstart", unlockAudio, { once: true });
+window.addEventListener("click", unlockAudio, { once: true });
+
+// --- Fonction pour jouer les sons ---
+function playSound(name) {
+  if (!planetSounds[name]) return;
+
+  Object.values(planetSounds).forEach(s => {
+    s.pause();
+    s.currentTime = 0;
+  });
+
+  planetSounds[name].play().catch((e)=>{
+    console.warn("iPhone bloque encore :", e);
+  });
+}
+
+// --- Clic sur une planète ---
+planets.forEach(p => {
+  p.addEventListener("click", () => {
+    const name = p.dataset.name;
+    planetName.textContent = name;
+    planetText.innerHTML = planetInfo[name];
+    playSound(name);
+  });
+});
+
+// --- Soleil ---
+sun.addEventListener("click", () => {
+  planetName.textContent = "Soleil";
+  planetText.innerHTML = planetInfo["Soleil"];
+  playSound("Soleil");
+});
+
+// --- ETAT GLOBAUX ---
+let soundEnabled = true;   // true = son autorisé, false = muet
+let systemPaused = false;  // état Pause / Lecture
+
+// --- BOUTON SON (ON/OFF) ---
+const toggleSoundBtn = document.getElementById("toggle-sound");
+toggleSoundBtn.addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+
+  // Mettre à jour l'apparence du bouton
+  toggleSoundBtn.textContent = soundEnabled ? "🔊 Son : ON" : "🔇 Son : OFF";
+  toggleSoundBtn.classList.toggle("off", !soundEnabled);
+
+  // Si on coupe le son, arrêter tous les sons en cours
+  if (!soundEnabled) {
+    Object.values(planetSounds).forEach(s => {
+      if (!s.paused) {
+        s.pause();
+        s.currentTime = 0;
+      }
+    });
+  }
+});
+
+// --- MODIFIER LA FONCTION playSound(name) pour respecter soundEnabled ---
+function playSound(name) {
+  if (!soundEnabled) return;           // si muet, ne joue rien
+  if (!planetSounds[name]) return;
+
+  // arrêt des autres sons
+  Object.values(planetSounds).forEach(s => {
+    s.pause();
+    s.currentTime = 0;
+  });
+
+  planetSounds[name].play().catch(e => {
+    console.warn("Impossible de jouer le son :", e);
+  });
+}
+
+// --- BOUTON PAUSE / REPRENDRE LE SYSTÈME SOLAIRE ---
+const toggleSystemBtn = document.getElementById("toggle-system");
+toggleSystemBtn.addEventListener("click", () => {
+  systemPaused = !systemPaused;
+
+  if (systemPaused) {
+    // Pause toutes les animations Anime.js enregistrées
+    planetOrbits.forEach(({ anim }) => anim.pause());
+    if (moonAnim) moonAnim.pause();
+
+    toggleSystemBtn.textContent = "▶ Reprendre système";
+    toggleSystemBtn.classList.add("paused");
+  } else {
+    // Reprendre
+    planetOrbits.forEach(({ anim }) => anim.play());
+    if (moonAnim) moonAnim.play();
+
+    toggleSystemBtn.textContent = "⏸️ Pause système";
+    toggleSystemBtn.classList.remove("paused");
+  }
+});
+
+  </script>
+
+</body>
+</html>
