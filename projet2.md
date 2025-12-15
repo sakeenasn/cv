@@ -1,1 +1,3 @@
-Pour rendre le projet interactif, j’ai ajouté un panneau latéral avec un titre et un texte. Lorsqu’une planète est cliquée : le panneau affiche son nom, des informations comme sa distance, sa composition et sa durée d’orbite.
+projet2.md : 
+Pour rendre le projet interactif, j’ai ajouté un panneau latéral avec un titre et un texte. 
+Lorsqu’une planète est cliquée : le panneau affiche son nom, des informations comme sa distance, sa composition et sa durée d’orbite.
