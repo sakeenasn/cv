@@ -11,7 +11,8 @@
   <p id="planet-info">Découvre les planètes en cliquant dessus !</p>
 
 </div>
-  <div class="space">
+  <div class="space-container">
+    <div class="space">
     <div class="sun"></div>
     <div class="planet mercury"></div>
     <div class="planet venus"></div>
@@ -30,12 +31,26 @@ body {
   margin: 0;
   overflow: hidden;
   background: radial-gradient(circle at center, #000010, #000);
+  font-family: Arial, sans-serif;
+  color: white;
 }
 
+.space-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+  
 .space {
   position: relative;
   width: 100vw;
   height: 100vh;
+  transform-origin: center center;
+  transition: transform 0.3s ease;
 }
 
 .sun {
