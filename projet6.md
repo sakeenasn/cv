@@ -1,3 +1,5 @@
+projet6.md : 
+
 Pour la version finale, j’ai ajouté un mode spécial “☢️ DANGER” accessible via un bouton placé en bas à droite, volontairement éloigné des autres contrôles.
 
 Lorsque ce bouton est activé, une séquence d’animations se déclenche : - les planètes sont aspirées, - une explosion se produit avec un son dédié (explosion.mp3), - des particules, des flashs lumineux et une onde de choc sont affichés.
