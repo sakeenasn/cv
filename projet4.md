@@ -1,2 +1,6 @@
-J’ai ajouté du son pour améliorer l’immersion dans l’animation. Chaque planète a un son spécifique qui se joue lors du clic. J’ai ajouté un fichier audio par planète ainsi que pour la Soleil (que j’ai trouver sur le site: https://pixabay.com/sound-effects.com). 
-J’ai aussi ajouté un système pour débloquer l’audio sur mobile afin de respecter les restrictions d’iOS/Android parce que j’ai eu un soucis avec iOS étant donné que je réalise ce projet sur iPad.
+projet4.md : 
+
+Dans cette version, j’ai ajouté du son afin d’améliorer l’immersion.
+Chaque planète (ainsi que le Soleil) possède un son spécifique qui se joue lorsqu’on clique dessus. Les fichiers audio ont été récupérés sur le site Pixabay.
+
+J’ai également dû gérer les restrictions audio sur mobile (iOS/Android). Pour cela, j’ai mis en place un système de déblocage audio qui autorise la lecture du son uniquement après la première interaction de l’utilisateur (clic ou toucher), afin d’éviter les blocages sur Safari/iPad.
