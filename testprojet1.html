@@ -3,12 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Système solaire</title>
+  <title>Système solaire - v1</title>
+
+  <!-- Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 
 <body>
+  
   <div class="space">
     <div class="sun"></div>
+
     <div class="planet mercury"></div>
     <div class="planet venus"></div>
     <div class="planet earth"></div>
@@ -17,131 +22,94 @@
     <div class="planet saturn"></div>
     <div class="planet uranus"></div>
     <div class="planet neptune"></div>
-    
-  <!-- Anime.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  </div>
 
-<style>
-body {
-  margin: 0;
-  overflow: hidden;
-  background: radial-gradient(circle at center, #000010, #000);
-}
-
-.space {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-}
-
-.sun {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(circle, #ffcc33, #ff6600);
-  border-radius: 50%;
-  box-shadow: 0 0 40px 20px rgba(255,200,50,0.8);
-  transform: translate(-50%, -50%);
-}
-
-.planet {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border-radius: 50%;
-}
-
-.mercury {
-  width: 12px;
-  height: 12px;
-  background: gray;
-}
-
-.venus {
-  width: 20px;
-  height: 20px;
-  background: orange;
-}
-
-.earth {
-  width: 22px;
-  height: 22px;
-  background: deepskyblue;
-}
-
-.mars    { 
-  width: 16px; 
-  height: 16px; 
-  background: red; }
-  
-.jupiter { 
-  width: 35px; 
-  height: 35px; 
-  background: peru; }
-  
-.saturn  { 
-  width: 30px; 
-  height: 30px; 
-  background: khaki; }
-  
-.uranus  { 
-  width: 26px; 
-  height: 26px; 
-  background: lightblue; }
-  
-.neptune { 
-  width: 24px; 
-  height: 24px; 
-  background: royalblue; }
-  
-</style>
-
-<script>
-
-// Fonction d'orbite avec Anime.js
-function orbit(planet, distance, duration) {
-  anime({
-    targets: planet,
-    rotate: '1turn',
-    duration: duration,
-    easing: 'linear',
-    loop: true,
-    update: anim => {
-      const angle = anim.progress / 100 * 2 * Math.PI;
-      const x = Math.cos(angle) * distance;
-      const y = Math.sin(angle) * distance;
-      planet.style.transform = `translate(${x}px, ${y}px)`;
+  <!-- ===== CSS ===== -->
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #000010, #000);
     }
-  });
-}
 
-// orbit
-orbit(document.querySelector('.mercury'), 100, 4000);
-orbit(document.querySelector('.venus'),   150, 7000);
-orbit(document.querySelector('.earth'),   210, 10000);
-orbit(document.querySelector('.mars'),    260, 13000);
-orbit(document.querySelector('.jupiter'), 330, 20000);
-orbit(document.querySelector('.saturn'),  400, 25000);
-orbit(document.querySelector('.uranus'),  470, 30000);
-orbit(document.querySelector('.neptune'), 540, 35000);
+    .space {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
 
-// Ajoute quelques étoiles aléatoires
-const space = document.querySelector('.space');
-for (let i = 0; i < 80; i++) {
-  const star = document.createElement('div');
-  star.style.position = 'absolute';
-  star.style.width = '2px';
-  star.style.height = '2px';
-  star.style.background = 'white';
-  star.style.borderRadius = '50%';
-  star.style.top = Math.random() * 100 + '%';
-  star.style.left = Math.random() * 100 + '%';
-  star.style.opacity = Math.random();
-  space.appendChild(star);
-}
-</script>
+    .sun {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, #ffcc33, #ff6600);
+      border-radius: 50%;
+      box-shadow: 0 0 40px 20px rgba(255,200,50,0.8);
+      transform: translate(-50%, -50%);
+    }
 
+    .planet {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+    }
+
+    .mercury { width: 10px; height: 10px; background: gray; }
+    .venus   { width: 18px; height: 18px; background: orange; }
+    .earth   { width: 20px; height: 20px; background: deepskyblue; }
+    .mars    { width: 16px; height: 16px; background: red; }
+    .jupiter { width: 35px; height: 35px; background: peru; }
+    .saturn  { width: 30px; height: 30px; background: khaki; }
+    .uranus  { width: 26px; height: 26px; background: lightblue; }
+    .neptune { width: 24px; height: 24px; background: royalblue; }
+  </style>
+
+  <!-- ===== JS ===== -->
+  <script>
+    const space = document.querySelector('.space');
+
+    // étoiles fixes (comme ta v0)
+    for (let i = 0; i < 80; i++) {
+      const star = document.createElement('div');
+      star.style.position = 'absolute';
+      star.style.width = '2px';
+      star.style.height = '2px';
+      star.style.background = 'white';
+      star.style.borderRadius = '50%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.opacity = Math.random();
+      space.appendChild(star);
+    }
+
+    // orbites
+    function orbit(planet, distance, duration) {
+      anime({
+        targets: planet,
+        rotate: '1turn',
+        duration,
+        easing: 'linear',
+        loop: true,
+        update: anim => {
+          const angle = (anim.progress / 100) * 2 * Math.PI;
+          const x = Math.cos(angle) * distance;
+          const y = Math.sin(angle) * distance;
+          planet.style.transform = `translate(${x}px, ${y}px)`;
+        }
+      });
+    }
+
+    orbit(document.querySelector('.mercury'), 100, 4000);
+    orbit(document.querySelector('.venus'),   150, 7000);
+    orbit(document.querySelector('.earth'),   210, 10000);
+    orbit(document.querySelector('.mars'),    260, 13000);
+    orbit(document.querySelector('.jupiter'), 330, 20000);
+    orbit(document.querySelector('.saturn'),  400, 25000);
+    orbit(document.querySelector('.uranus'),  470, 30000);
+    orbit(document.querySelector('.neptune'), 540, 35000);
+  </script>
 </body>
 </html>
