@@ -1,1 +1,2 @@
+projet3.md : 
 Ajout de sliders pour permettre à l’utilisateur de : modifier la vitesse des orbites et de zoomer et dézoomer sur le système solaire. Les sliders sont liés à JavaScript pour ajuster dynamiquement la vitesse (duration) et l’échelle (scale) des orbites.
