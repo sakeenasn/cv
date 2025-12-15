@@ -1,13 +1,5 @@
-Après avoir terminé l’affichage du système solaire et le mouvement des planètes, j’ai voulu rendre le projet plus interactif.
-Pour ça j’ai ajouté deux nouveaux boutons sous les curseurs (zoom + vitesse), ajouté sous les sliders:
-Bouton Son ON / OFF => Ce bouton sert à gérer les sons joués quand on clique sur une planète.
-ON → les sons sont activés et peuvent se jouer normalement
-OFF → tous les sons sont coupés et impossible d’en jouer tant que le bouton est désactivé
-Si un son est en cours, il est stoppé immédiatement et appuyer sur la planète pour réécouter le son.
+Pour la version finale, j’ai ajouté un mode spécial “☢️ DANGER” accessible via un bouton placé en bas à droite, volontairement éloigné des autres contrôles.
 
-Bouton Pause / Reprendre le Système -> Ce bouton met tout le système solaire en pause , plus rien ne tourne.
-Met en pause toutes les animations des planètes, de la Lune et du Soleil
-Un deuxième clic relance tout là où ça s’est arrêté
-Rien, ne recommence depuis le début : ça reprend exactement au même endroit
-J’ai du modifier l’animation de la lune pour qu’elle soit comprise avec les autres planètes. Ces fonctions utilisent les méthodes .pause et .play d’Anime.js et gèrent correctement l’arrêt des fichiers audio en cours.
-L’utilisateur peut observer une planète immobile, ou relancer tout le système d’un clic.
+Lorsque ce bouton est activé, une séquence d’animations se déclenche : - les planètes sont aspirées, - une explosion se produit avec un son dédié (explosion.mp3), - des particules, des flashs lumineux et une onde de choc sont affichés.
+
+À la fin de la séquence, l’écran devient entièrement noir et seul un bouton "🔄 Réinitialiser" reste visible, permettant de recharger le projet depuis le début. Cette version montre une utilisation avancée d’Anime.js et une gestion complète des animations, du son et de l’interface.
