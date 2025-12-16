@@ -10,12 +10,19 @@ Technologies utilisées :
 html+css: structure et style des planètes et du Soleil
 Anime.js : animations orbitales et interactions simples
 
+J'ai utilisé une IA comme outil de compréhension pour m'indiquer où modifier mon code lorsque j'avais un doute. Elle m'a guidé, mais j'ai réalisé les tests, les corrections et les améliorations moi-même afin de construire le projet final.
+
+
 Résultats attendus :
 Une animation fluide du système solaire avec planètes en orbite. Possibilité d’interagir pour observer les planètes et leurs caractéristiques
 
 Projet.md : 
 J’ai commencé avec une première version teste avec le Soleil et 3 planètes : Mercure, Vénus et Terre. 
+
 Chaque planète est représentée par un <div> et stylisée avec CSS (taille, couleur, forme ronde). Le Soleil a été créé au centre de l’écran avec un dégradé et une lueur pour le rendre réaliste. 
+
 J’ai ajouté Anime.js pour animer les orbites circulaires autour du Soleil. J’ai pu obtenir les premières planètes tournent de manière fluide autour du Soleil.
+
 Pour créer l’effet d’espace, j’ai généré des étoiles aléatoires avec JavaScript. 
+
 Chaque étoile est un petit <div> blanc positionné de manière aléatoire sur l’écran avec une opacité aléatoire, pour que l’espace a l’air plus vivant et réaliste. 
